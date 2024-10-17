@@ -1,0 +1,73 @@
+create database sistema_escolar;
+use sistema_escolar;
+
+CREATE TABLE CURSO (
+  idCURSO INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
+  nome_curso VARCHAR(50)  NOT NULL  ,
+  duracao VARCHAR(20)  NOT NULL    ,
+PRIMARY KEY(idCURSO));
+
+CREATE TABLE PROFESSOR (
+  idPROFESSOR INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
+  nome_professor VARCHAR(50)  NOT NULL  ,
+  sobrenome_professor VARCHAR(90)  NOT NULL  ,
+  email VARCHAR(150)  NOT NULL  ,
+  especialidade VARCHAR(30)  NOT NULL    ,
+PRIMARY KEY(idPROFESSOR));
+
+CREATE TABLE ALUNO (
+  idALUNO INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
+  nome_aluno VARCHAR(50)  NOT NULL  ,
+  sobrenome_aluno VARCHAR(90) NOT NULL,
+  email INTEGER(150) UNSIGNED  NOT NULL  ,
+  data_nascimento DATE  NOT NULL    ,
+PRIMARY KEY(idALUNO));
+
+CREATE TABLE DISCIPLINA (
+  idDISCIPLINA INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
+  PROFESSOR_idPROFESSOR INTEGER UNSIGNED  NOT NULL  ,
+  CURSO_idCURSO INTEGER UNSIGNED  NOT NULL  ,
+  nome_disciplina VARCHAR(50)  NULL    ,
+PRIMARY KEY(idDISCIPLINA)  ,
+INDEX DISCIPLINA_FKIndex1(CURSO_idCURSO)  ,
+INDEX DISCIPLINA_FKIndex2(PROFESSOR_idPROFESSOR));
+
+CREATE TABLE MATRICULA (
+  idMATRICULA INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
+  TURMA_idTURMA INTEGER UNSIGNED  NOT NULL  ,
+  ALUNO_idALUNO INTEGER UNSIGNED  NOT NULL  ,
+  data_matricula DATE  NOT NULL    ,
+PRIMARY KEY(idMATRICULA)  ,
+INDEX MATRICULA_FKIndex1(ALUNO_idALUNO)  ,
+INDEX MATRICULA_FKIndex2(TURMA_idTURMA));
+
+CREATE TABLE TURMA (
+  idTURMA INTEGER UNSIGNED  NOT NULL  AUTO_INCREMENT,
+  DISCIPLINA_idDISCIPLINA INTEGER UNSIGNED  NOT NULL  ,
+  nome_turma VARCHAR(100)  NOT NULL  ,
+  semestre TINYINT UNSIGNED  NULL    ,
+PRIMARY KEY(idTURMA)  ,
+INDEX TURMA_FKIndex1(DISCIPLINA_idDISCIPLINA));
+
+# Inserindo dados
+-- TABELA ALUNO
+insert into ALUNO(nome_aluno, sobrenome_aluno, email, data_nascimento)values('Fulano','Igor', 'fulano@gmail.com', '2004-10-17');
+insert into ALUNO(nome_aluno, sobrenome_aluno, email, data_nascimento)values('Cicrano','Clóvis', 'Cicrano@gmail.com', '2003-08-01');
+insert into ALUNO(nome_aluno, sobrenome_aluno, email, data_nascimento)values('Lula','Inácio', 'lulao@gmail.com', '1980-02-20');
+insert into ALUNO(nome_aluno, sobrenome_aluno, email, data_nascimento)values('Gustavo','Guanabara', 'gustavo@gmail.com', '1960-10-02');
+
+# Inserindo dados
+-- TABELA PROFESSOR
+insert into PROFESSOR(nome_professor, sobrenome_professor, email, especialidade)values('Antônio', 'Victor', 'antonio@gmail.com', 'biólogo'); 
+insert into PROFESSOR(nome_professor, sobrenome_professor, email, especialidade)values('Bruno', 'Mars', 'bruno@gmail.com', 'musicista'); 
+insert into PROFESSOR(nome_professor, sobrenome_professor, email, especialidade)values('Fernando', 'Rubens', 'fernando@gmail.com', 'filósofo');
+insert into PROFESSOR(nome_professor, sobrenome_professor, email, especialidade)values('Bernado', 'Kleber', 'bernad@gmail.com', 'históriador');
+
+-- TABELA CURSO
+insert into CURSO(nome_curso, duracao)values('Preparatório ENEM', '1 ano');
+insert into CURSO(nome_curso, duracao)values('Preparatório PMBA', '1 ano');
+insert into CURSO(nome_curso, duracao)values('Preparatório FULL-STACK', '2 anos');
+insert into CURSO(nome_curso, duracao)values('Preparatório CIÊNCIA DE DADOS', '4 anos');
+
+select*from ALUNO; 
+drop table ALUNO; # Para deletar a tabela Aluno
